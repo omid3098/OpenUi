@@ -7,7 +7,7 @@ namespace OpenUi
         protected override void Pressed()
         {
             base.Pressed();
-            transform.parent.GetComponent<Modal>().Hide();
+            transform.parent.GetComponent<Modal<SampleModalType>>().Hide();
         }
     }
 }

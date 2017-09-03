@@ -1,24 +1,18 @@
+using System;
 using OpenUi;
 using UnityEngine;
 
 namespace OpenUi
 {
-    public class Modal : ViewBase
+    public class Modal<T> : ViewBase
+        where T : struct, IConvertible
     {
-        [SerializeField] private bool bshowCloseButton = true;
-        public ModalType modalType;
+        public T modalType;
 
         #region Methods
         protected override void Awake()
         {
             base.Awake();
-            if (bshowCloseButton) ShowCloseButton();
-        }
-
-        private void ShowCloseButton()
-        {
-            var t = GameObject.Instantiate(UiManager.instance.GetButtonPrefab(FormButtonTypes.close));
-            t.transform.SetParent(transform, false);
         }
 
         public void Hide()

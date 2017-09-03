@@ -1,6 +1,6 @@
 namespace OpenUi
 {
-    public enum ModalType
+    public enum SampleModalType
     {
         SamplePopUp,
         SampleNotif,

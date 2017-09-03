@@ -1,6 +1,6 @@
 namespace OpenUi
 {
-    public enum WindowType
+    public enum SampleWindowType
     {
         MainMenu,
         ShopMenu,

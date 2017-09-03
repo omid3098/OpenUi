@@ -5,12 +5,12 @@ namespace OpenUi
 {
     public class ChangeWindowButton : ODButton
     {
-        [SerializeField] private WindowType windowType;
+        [SerializeField] private SampleWindowType windowType;
         override protected void Pressed()
         {
             base.Pressed();
             Debug.Log("Showing window: " + windowType);
-            UiManager.instance.ChangeWindow(windowType);
+            UiManager<SampleWindowType, SampleModalType>.instance.ChangeWindow(windowType);
         }
     }
 }

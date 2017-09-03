@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114849930818863962}
   - component: {fileID: 114005390969416006}
   - component: {fileID: 114963032003778384}
-  - component: {fileID: 114578357662931406}
+  - component: {fileID: 114332673910290398}
   m_Layer: 5
   m_Name: coin-modal
   m_TagString: Untagged
@@ -95,7 +95,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: COIN
---- !u!114 &114578357662931406
+--- !u!114 &114332673910290398
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -103,10 +103,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1201215962130236}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d30f697ce7b9d0d44b2e877a5d54489b, type: 3}
+  m_Script: {fileID: 11500000, guid: ca7cf8c8dc6844899bfe71b8c2ea36d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bshowCloseButton: 0
   modalType: 2
 --- !u!114 &114849930818863962
 MonoBehaviour:

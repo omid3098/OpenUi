@@ -1,23 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using OpenUi;
 using UnityEngine;
 namespace OpenUi
 {
-    public class UiManager : MonoBehaviour
+    public class UiManager<TWin, TMod> : MonoBehaviour
+        where TWin : struct, IConvertible
+        where TMod : struct, IConvertible
     {
         #region Properties
-        private static UiManager _instance;
-        public static UiManager instance
+        private static UiManager<TWin, TMod> _instance;
+        public static UiManager<TWin, TMod> instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = GameObject.FindObjectOfType<UiManager>();
+                    _instance = GameObject.FindObjectOfType<UiManager<TWin, TMod>>();
                     if (_instance == null)
                     {
                         var t = new GameObject("ui-manager");
-                        _instance = t.AddComponent<UiManager>();
+                        _instance = t.AddComponent<UiManager<TWin, TMod>>();
                     }
                 }
                 return _instance;
@@ -41,12 +44,12 @@ namespace OpenUi
         #endregion
 
         #region Fields
-        [SerializeField] private WindowType initialMenu;
-        private List<Window> windowPrefabs;
-        private List<Window> windowList;
-        private List<Modal> modalPrefabs;
+        [SerializeField] private TWin initialMenu;
+        private List<Window<TWin, TMod>> windowPrefabs;
+        private List<Window<TWin, TMod>> windowList;
+        private List<Modal<TMod>> modalPrefabs;
         private List<FormButton> formButtonPrefabs;
-        private Window currentWindow;
+        private Window<TWin, TMod> currentWindow;
         #endregion
 
         #region Methods
@@ -59,24 +62,25 @@ namespace OpenUi
 
         void LoadService()
         {
-            windowPrefabs = new List<Window>();
-            windowList = new List<Window>();
-            modalPrefabs = new List<Modal>();
+            windowPrefabs = new List<Window<TWin, TMod>>();
+            windowList = new List<Window<TWin, TMod>>();
+            modalPrefabs = new List<Modal<TMod>>();
             formButtonPrefabs = new List<FormButton>();
-            windowPrefabs.AddRange(Resources.LoadAll<Window>(UiManagerSetting.windowPath));
-            modalPrefabs.AddRange(Resources.LoadAll<Modal>(UiManagerSetting.modalPath));
+            windowPrefabs.AddRange(Resources.LoadAll<Window<TWin, TMod>>(UiManagerSetting.windowPath));
+            modalPrefabs.AddRange(Resources.LoadAll<Modal<TMod>>(UiManagerSetting.modalPath));
             formButtonPrefabs.AddRange(Resources.LoadAll<FormButton>(UiManagerSetting.buttonPath));
         }
 
-        public void ChangeWindow(WindowType windowType)
+        public void ChangeWindow(TWin windowType)
         {
             if (currentWindow != null) currentWindow.Hide();
-            Window window;
-            window = windowList.Find(x => x.windowType == windowType);
+            Window<TWin, TMod> window;
+            window = windowList.Find(x => EqualityComparer<TWin>.Default.Equals(x.windowType, windowType));
+
             // if first time showing window
             if (window == null)
             {
-                Window windowPrefab = windowPrefabs.Find(x => x.windowType == windowType);
+                Window<TWin, TMod> windowPrefab = windowPrefabs.Find(x => EqualityComparer<TWin>.Default.Equals(x.windowType, windowType));
                 if (windowPrefab != null)
                 {
                     window = GameObject.Instantiate(windowPrefab);
@@ -94,14 +98,14 @@ namespace OpenUi
             window.Show();
         }
 
-        public void ShowModal(ModalType modalType)
+        public void ShowModal(TMod modalType)
         {
-            Modal modal;
+            Modal<TMod> modal;
             modal = currentWindow.GetModal(modalType);
             // if first time showing modal
             if (modal == null)
             {
-                Modal modalPrefab = modalPrefabs.Find(x => x.modalType == modalType);
+                Modal<TMod> modalPrefab = modalPrefabs.Find(x => EqualityComparer<TMod>.Default.Equals(x.modalType, modalType));
                 if (modalPrefab != null)
                 {
                     modal = GameObject.Instantiate(modalPrefab);
@@ -118,9 +122,9 @@ namespace OpenUi
             modal.Show();
         }
 
-        public void HideModal(ModalType modalType)
+        public void HideModal(TMod modalType)
         {
-            Modal modal;
+            Modal<TMod> modal;
             modal = currentWindow.GetModal(modalType);
             if (modal != null)
             {

@@ -5,11 +5,11 @@ namespace OpenUi.Button
 {
     public class HideModalButton : ODButton
     {
-        [SerializeField] private ModalType modalType;
+        [SerializeField] private SampleModalType modalType;
         override protected void Pressed()
         {
             base.Pressed();
-            UiManager.instance.HideModal(modalType);
+            UiManager<SampleWindowType, SampleModalType>.instance.HideModal(modalType);
         }
     }
 }
