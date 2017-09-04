@@ -4,28 +4,28 @@ using OpenUi;
 using UnityEngine;
 namespace OpenUi
 {
-    public class UiManager<TWin, TMod> : MonoBehaviour
+    public class UiManager<TWin, TMod>
         where TWin : struct, IConvertible
         where TMod : struct, IConvertible
     {
         #region Properties
-        private static UiManager<TWin, TMod> _instance;
-        public static UiManager<TWin, TMod> instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = GameObject.FindObjectOfType<UiManager<TWin, TMod>>();
-                    if (_instance == null)
-                    {
-                        var t = new GameObject("ui-manager");
-                        _instance = t.AddComponent<UiManager<TWin, TMod>>();
-                    }
-                }
-                return _instance;
-            }
-        }
+        // private static UiManager<TWin, TMod> _instance;
+        // public static UiManager<TWin, TMod> instance
+        // {
+        //     get
+        //     {
+        //         if (_instance == null)
+        //         {
+        //             _instance = GameObject.FindObjectOfType<UiManager<TWin, TMod>>();
+        //             if (_instance == null)
+        //             {
+        //                 var t = new GameObject("ui-manager");
+        //                 _instance = t.AddComponent<UiManager<TWin, TMod>>();
+        //             }
+        //         }
+        //         return _instance;
+        //     }
+        // }
 
         public Canvas canvas
         {
@@ -35,7 +35,7 @@ namespace OpenUi
                 {
                     var t = Resources.Load<Canvas>(UiManagerSetting.canvasPath);
                     _canvas = GameObject.Instantiate(t);
-                    _canvas.transform.SetParent(transform, false);
+                    // _canvas.transform.SetParent(transform, false);
                 }
                 return _canvas;
             }
@@ -55,7 +55,6 @@ namespace OpenUi
         #region Methods
         void Awake()
         {
-            GameObject.DontDestroyOnLoad(this);
             LoadService();
             ChangeWindow(initialMenu);
         }
