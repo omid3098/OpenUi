@@ -1,5 +1,5 @@
 # Warning:
-under active development to become part of OpenFramework (https://github.com/omid3098/OpenFramework)
+Discontinued and merged into OpenFramework (https://github.com/omid3098/OpenFramework)
 
 # OpenUi
 
