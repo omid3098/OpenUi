@@ -15,6 +15,8 @@ you can not see more than one window at a time but you can see any number of mod
 ie1: You want to show a popup to user and ask "Are you sure? Yes/No" in shop, in this scenario, popup is a modal and shop menu is Window.
 ie2: You want to show coin count both in main menu and shop, you can put coin ui elements inside main menu and shop menu separately, but the best approach is to have a single coin-modal and use it in every place you want. so when coin elements need a change, you only change it once in its own modal.
 
+### Note: make sure to install [requirements](#requirements) before installing OpenUi.
+
 ### Add new Window:
 1. Open WindowType.cs
 2. Add/Remove your Window types.
@@ -58,4 +60,5 @@ Fade: (in/out)
 
 
 ### Requirements:
-* prime31 ZestKit tween library. (https://github.com/prime31/ZestKit)
+* Dotween for tweenings. (http://dotween.demigiant.com/index.php)
+* Install DoTween from Tools > Demigiant > DoTween Utility Panel > Setup DoTween
