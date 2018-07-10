@@ -6,7 +6,6 @@ namespace OpenUi
     public class ShowModalButton : ODButton
     {
         [SerializeField] private SampleModalType modalType;
-        private UiManager<SampleWindowType, SampleModalType> uiManager;
         override protected void Pressed()
         {
             base.Pressed();

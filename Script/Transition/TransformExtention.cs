@@ -1,5 +1,6 @@
 using System;
-using Prime31.ZestKit;
+// using Prime31.ZestKit;
+using DG.Tweening;
 using UnityEngine;
 
 namespace OpenUi.Transition
@@ -15,24 +16,23 @@ namespace OpenUi.Transition
         /// <param name="easeType">fading easeType</param>
         /// <param name="onCompleteCallback">callback on tween completion</param>
         /// <param name="blockRaycast">block Raycasts during tween time?</param>
-        /// <returns>returns ITween<float> that can be used for other purposes.</returns>
-        public static ITween<float> FadeIn(this Transform transform,
+        /// <returns>returns Tweener that can be used for other purposes.</returns>
+        public static Tweener FadeIn(this Transform transform,
             float duration,
-            EaseType easeType = EaseType.Linear,
+            Ease easeType = Ease.Linear,
             Action onCompleteCallback = null,
             bool blockRaycast = false)
         {
             CanvasGroup image = InitCanvasGroup(transform, blockRaycast);
             image.alpha = 0;
-            ITween<float> tween = image.ZKalphaTo(1f, duration);
-            tween.setEaseType(easeType);
-            tween.setCompletionHandler((t) =>
+            Tweener tween = image.DOFade(1f, duration);
+            tween.SetEase(easeType);
+            tween.OnComplete(() =>
             {
                 if (onCompleteCallback != null)
                     onCompleteCallback.Invoke();
                 image.blocksRaycasts = true;
             });
-            tween.start();
             return tween;
         }
 
@@ -45,19 +45,19 @@ namespace OpenUi.Transition
         /// <param name="onCompleteCallback">callback on tween completion</param>
         /// <param name="deactiveOnComplete">Whether deactive object when fade out completed?</param>
         /// <param name="blockRaycast">block Raycasts during tween time?</param>
-        /// <returns>returns ITween<float> that can be used for other purposes.</returns>
-        public static ITween<float> FadeOut(this Transform transform,
+        /// <returns>returns Tweener that can be used for other purposes.</returns>
+        public static Tweener FadeOut(this Transform transform,
             float duration,
-            EaseType easeType = EaseType.Linear,
+            Ease easeType = Ease.Linear,
             Action onCompleteCallback = null,
             bool deactiveOnComplete = false,
             bool blockRaycast = false)
         {
             CanvasGroup image = InitCanvasGroup(transform, blockRaycast);
             image.alpha = 1;
-            ITween<float> tween = image.ZKalphaTo(0f, duration);
-            tween.setEaseType(easeType);
-            tween.setCompletionHandler((t) =>
+            Tweener tween = image.DOFade(0f, duration);
+            tween.SetEase(easeType);
+            tween.OnComplete(() =>
             {
                 if (onCompleteCallback != null)
                     onCompleteCallback.Invoke();
@@ -65,7 +65,6 @@ namespace OpenUi.Transition
                 if (deactiveOnComplete)
                     transform.gameObject.SetActive(false);
             });
-            tween.start();
             return tween;
         }
         #endregion
@@ -79,16 +78,16 @@ namespace OpenUi.Transition
         /// <param name="easeType">tween easeType</param>
         /// <param name="onCompleteCallback">scale in completion callback</param>
         /// <param name="blockRaycast">block raycasts during tweening</param>
-        /// <returns>returns ITween<Vector3> that can be used for other purposes.</returns>
-        public static ITween<Vector3> ScaleIn(this Transform transform,
+        /// <returns>returns Tweener that can be used for other purposes.</returns>
+        public static Tweener ScaleIn(this Transform transform,
             float duration,
-            EaseType easeType = EaseType.Linear,
+            Ease easeType = Ease.Linear,
             Action onCompleteCallback = null,
             bool blockRaycast = false)
         {
             CanvasGroup image = InitCanvasGroup(transform, blockRaycast);
             transform.localScale = new Vector2(0, 0);
-            ITween<Vector3> tween = transform.ZKlocalScaleTo(new Vector3(1, 1, 1), duration);
+            Tweener tween = transform.DOScale(new Vector3(1, 1, 1), duration);
             FillInTween(easeType, onCompleteCallback, image, tween);
             return tween;
         }
@@ -100,16 +99,16 @@ namespace OpenUi.Transition
         /// <param name="easeType">tween easeType</param>
         /// <param name="onCompleteCallback">scale out completion callback</param>
         /// <param name="blockRaycast">block raycasts during tweening</param>
-        /// <returns>returns ITween<Vector3> that can be used for other purposes.</returns>
-        public static ITween<Vector3> ScaleOut(this Transform transform,
+        /// <returns>returns Tweener that can be used for other purposes.</returns>
+        public static Tweener ScaleOut(this Transform transform,
             float duration,
-            EaseType easeType = EaseType.Linear,
+            Ease easeType = Ease.Linear,
             Action onCompleteCallback = null,
             bool deactiveOnComplete = false,
             bool blockRaycast = false)
         {
             CanvasGroup image = InitCanvasGroup(transform, blockRaycast);
-            ITween<Vector3> tween = transform.ZKlocalScaleTo(new Vector3(0, 0, 0), duration);
+            Tweener tween = transform.DOScale(new Vector3(0, 0, 0), duration);
             FillOutTween(transform, easeType, onCompleteCallback, deactiveOnComplete, image, tween);
             return tween;
         }
@@ -122,16 +121,16 @@ namespace OpenUi.Transition
         /// <param name="easeType">tween easeType</param>
         /// <param name="onCompleteCallback">scale in completion callback</param>
         /// <param name="blockRaycast">block raycasts during tweening</param>
-        /// <returns>returns ITween<Vector3> that can be used for other purposes.</returns>
-        public static ITween<Vector3> ScaleInX(this Transform transform,
+        /// <returns>returns Tweener that can be used for other purposes.</returns>
+        public static Tweener ScaleInX(this Transform transform,
             float duration,
-            EaseType easeType = EaseType.Linear,
+            Ease easeType = Ease.Linear,
             Action onCompleteCallback = null,
             bool blockRaycast = false)
         {
             CanvasGroup image = InitCanvasGroup(transform, blockRaycast);
             transform.localScale = new Vector2(0, 1);
-            ITween<Vector3> tween = transform.ZKlocalScaleTo(new Vector3(1, 1, 1), duration);
+            Tweener tween = transform.DOScale(new Vector3(1, 1, 1), duration);
             FillInTween(easeType, onCompleteCallback, image, tween);
             return tween;
         }
@@ -144,16 +143,16 @@ namespace OpenUi.Transition
         /// <param name="easeType">tween easeType</param>
         /// <param name="onCompleteCallback">scale out completion callback</param>
         /// <param name="blockRaycast">block raycasts during tweening</param>
-        /// <returns>returns ITween<Vector3> that can be used for other purposes.</returns>
-        public static ITween<Vector3> ScaleOutX(this Transform transform,
+        /// <returns>returns Tweener that can be used for other purposes.</returns>
+        public static Tweener ScaleOutX(this Transform transform,
             float duration,
-            EaseType easeType = EaseType.Linear,
+            Ease easeType = Ease.Linear,
             Action onCompleteCallback = null,
             bool deactiveOnComplete = false,
             bool blockRaycast = false)
         {
             var image = InitCanvasGroup(transform, blockRaycast);
-            ITween<Vector3> tween = transform.ZKlocalScaleTo(new Vector2(0, 1), duration);
+            Tweener tween = transform.DOScale(new Vector2(0, 1), duration);
             FillOutTween(transform, easeType, onCompleteCallback, deactiveOnComplete, image, tween);
             return tween;
         }
@@ -166,16 +165,16 @@ namespace OpenUi.Transition
         /// <param name="easeType">tween easeType</param>
         /// <param name="onCompleteCallback">scale in completion callback</param>
         /// <param name="blockRaycast">block raycasts during tweening</param>
-        /// <returns>returns ITween<Vector3> that can be used for other purposes.</returns>
-        public static ITween<Vector3> ScaleInY(this Transform transform,
+        /// <returns>returns Tweener that can be used for other purposes.</returns>
+        public static Tweener ScaleInY(this Transform transform,
             float duration,
-            EaseType easeType = EaseType.Linear,
+            Ease easeType = Ease.Linear,
             Action onCompleteCallback = null,
             bool blockRaycast = false)
         {
             CanvasGroup image = InitCanvasGroup(transform, blockRaycast);
             transform.localScale = new Vector2(1, 0);
-            ITween<Vector3> tween = transform.ZKlocalScaleTo(new Vector3(1, 1, 1), duration);
+            Tweener tween = transform.DOScale(new Vector3(1, 1, 1), duration);
             FillInTween(easeType, onCompleteCallback, image, tween);
             return tween;
         }
@@ -188,25 +187,25 @@ namespace OpenUi.Transition
         /// <param name="easeType">tween easeType</param>
         /// <param name="onCompleteCallback">scale out completion callback</param>
         /// <param name="blockRaycast">block raycasts during tweening</param>
-        /// <returns>returns ITween<Vector3> that can be used for other purposes.</returns>
-        public static ITween<Vector3> ScaleOutY(this Transform transform,
+        /// <returns>returns Tweener that can be used for other purposes.</returns>
+        public static Tweener ScaleOutY(this Transform transform,
             float duration,
-            EaseType easeType = EaseType.Linear,
+            Ease easeType = Ease.Linear,
             Action onCompleteCallback = null,
             bool deactiveOnComplete = false,
             bool blockRaycast = false)
         {
             var image = InitCanvasGroup(transform, blockRaycast);
-            ITween<Vector3> tween = transform.ZKlocalScaleTo(new Vector2(1, 0), duration);
+            Tweener tween = transform.DOScale(new Vector2(1, 0), duration);
             FillOutTween(transform, easeType, onCompleteCallback, deactiveOnComplete, image, tween);
             return tween;
         }
         #endregion
 
         #region Slide
-        public static ITween<Vector3> SlideIn(this Transform transform,
+        public static Tweener SlideIn(this Transform transform,
             float duration,
-            EaseType easeType = EaseType.Linear,
+            Ease easeType = Ease.Linear,
             Action onCompleteCallback = null,
             bool deactiveOnComplete = false,
             bool blockRaycast = false,
@@ -231,13 +230,13 @@ namespace OpenUi.Transition
                     transform.position += new Vector3(0, -yOffset);
                     break;
             }
-            ITween<Vector3> tween = transform.ZKpositionTo(startPos, duration);
+            Tweener tween = transform.DOMove(startPos, duration);
             FillOutTween(transform, easeType, onCompleteCallback, deactiveOnComplete, image, tween);
             return tween;
         }
-        public static ITween<Vector3> SlideOut(this Transform transform,
+        public static Tweener SlideOut(this Transform transform,
             float duration,
-            EaseType easeType = EaseType.Linear,
+            Ease easeType = Ease.Linear,
             Action onCompleteCallback = null,
             bool deactiveOnComplete = false,
             bool blockRaycast = false,
@@ -263,9 +262,9 @@ namespace OpenUi.Transition
                     destPos += new Vector3(0, -yOffset);
                     break;
             }
-            ITween<Vector3> tween = transform.ZKpositionTo(destPos, duration);
-            tween.setEaseType(easeType);
-            tween.setCompletionHandler((t) =>
+            Tweener tween = transform.DOMove(destPos, duration);
+            tween.SetEase(easeType);
+            tween.OnComplete(() =>
             {
                 if (onCompleteCallback != null)
                     onCompleteCallback.Invoke();
@@ -274,7 +273,6 @@ namespace OpenUi.Transition
                 if (deactiveOnComplete)
                     transform.gameObject.SetActive(false);
             });
-            tween.start();
             return tween;
         }
         #endregion
@@ -289,21 +287,20 @@ namespace OpenUi.Transition
             transform.localScale = new Vector3(1, 1, 1);
             return image;
         }
-        private static void FillInTween(EaseType easeType, Action onCompleteCallback, CanvasGroup image, ITween<Vector3> tween)
+        private static void FillInTween(Ease easeType, Action onCompleteCallback, CanvasGroup image, Tweener tween)
         {
-            tween.setEaseType(easeType);
-            tween.setCompletionHandler((t) =>
+            tween.SetEase(easeType);
+            tween.OnComplete(() =>
             {
                 if (onCompleteCallback != null)
                     onCompleteCallback.Invoke();
                 image.blocksRaycasts = true;
             });
-            tween.start();
         }
-        private static void FillOutTween(Transform transform, EaseType easeType, Action onCompleteCallback, bool deactiveOnComplete, CanvasGroup image, ITween<Vector3> tween)
+        private static void FillOutTween(Transform transform, Ease easeType, Action onCompleteCallback, bool deactiveOnComplete, CanvasGroup image, Tweener tween)
         {
-            tween.setEaseType(easeType);
-            tween.setCompletionHandler((t) =>
+            tween.SetEase(easeType);
+            tween.OnComplete(() =>
             {
                 if (onCompleteCallback != null)
                     onCompleteCallback.Invoke();
@@ -311,7 +308,6 @@ namespace OpenUi.Transition
                 if (deactiveOnComplete)
                     transform.gameObject.SetActive(false);
             });
-            tween.start();
         }
     }
 }

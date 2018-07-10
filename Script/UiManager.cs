@@ -50,14 +50,15 @@ namespace OpenUi
         private List<Modal<TMod>> modalPrefabs;
         private List<FormButton> formButtonPrefabs;
         private Window<TWin, TMod> currentWindow;
+
+        public UiManager()
+        {
+            LoadService();
+        }
+
         #endregion
 
         #region Methods
-        void Awake()
-        {
-            LoadService();
-            ChangeWindow(initialMenu);
-        }
 
         void LoadService()
         {

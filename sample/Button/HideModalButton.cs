@@ -6,8 +6,6 @@ namespace OpenUi.Button
     public class HideModalButton : ODButton
     {
         [SerializeField] private SampleModalType modalType;
-        private UiManager<SampleWindowType, SampleModalType> uiManager;
-
         override protected void Pressed()
         {
             base.Pressed();

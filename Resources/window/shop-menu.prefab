@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114054570135189010}
   - component: {fileID: 114927647590425200}
   - component: {fileID: 114537924273851806}
-  - component: {fileID: 114241192302275942}
+  - component: {fileID: 114202959992735796}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -305,7 +305,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Show Modal: Sample Notification'
---- !u!114 &114241192302275942
+--- !u!114 &114202959992735796
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -313,7 +313,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1034799704552366}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f9911fc08d3742939a4d4870fed7dce, type: 3}
+  m_Script: {fileID: 11500000, guid: 22bcb01a5ecbb48a99853a4009c0b116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   windowType: 0
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1468653380122998}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3eb160dbdd484e55a0a6500f24cc5fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d0781e6b43214fa4a20ff9632f318e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   modalType: 0
@@ -501,7 +501,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1226191966834110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3eb160dbdd484e55a0a6500f24cc5fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d0781e6b43214fa4a20ff9632f318e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   modalType: 1
@@ -781,7 +781,7 @@ RectTransform:
   m_Children:
   - {fileID: 224522014274721440}
   m_Father: {fileID: 224946450703445258}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -818,7 +818,7 @@ RectTransform:
   m_Children:
   - {fileID: 224593594576198590}
   m_Father: {fileID: 224946450703445258}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -837,7 +837,7 @@ RectTransform:
   m_Children:
   - {fileID: 224541343480466090}
   m_Father: {fileID: 224946450703445258}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -855,9 +855,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224986125191308182}
-  - {fileID: 224817665441468876}
   - {fileID: 224542588454941010}
   - {fileID: 224769206422270280}
+  - {fileID: 224817665441468876}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

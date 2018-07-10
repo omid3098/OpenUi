@@ -1,5 +1,5 @@
 using System;
-using Prime31.ZestKit;
+using DG.Tweening;
 using UnityEngine;
 
 namespace OpenUi.Transition
@@ -15,13 +15,13 @@ namespace OpenUi.Transition
     {
         public float duration = 0.2f;
         public TransitionType transitionType = TransitionType.fade;
-        public EaseType easeType;
+        public Ease easeType;
         private Action onPlayCallback;
-        public void Play(float _duration = -1f, TransitionType _transitionType = TransitionType.none, Action _onPlayCallback = null, EaseType _easeType = EaseType.Linear)
+        public void Play(float _duration = -1f, TransitionType _transitionType = TransitionType.none, Action _onPlayCallback = null, Ease _easeType = Ease.Linear)
         {
             if (_duration == -1f) _duration = duration;
             if (_transitionType == TransitionType.none) _transitionType = transitionType;
-            if (_easeType == EaseType.Linear) _easeType = easeType;
+            if (_easeType == Ease.Linear) _easeType = easeType;
             switch (_transitionType)
             {
                 case TransitionType.none:
@@ -55,10 +55,10 @@ namespace OpenUi.Transition
             }
         }
 
-        protected abstract void Fade(float _duration, Action _onPlayCallback, EaseType _easeType);
-        protected abstract void Scale(float _duration, Action _onPlayCallback, EaseType _easeType);
-        protected abstract void ScaleX(float _duration, Action _onPlayCallback, EaseType _easeType);
-        protected abstract void ScaleY(float _duration, Action _onPlayCallback, EaseType _easeType);
-        internal abstract void Slide(float duration, Action onPlayCallback, EaseType easeType, slideDirection direction);
+        protected abstract void Fade(float _duration, Action _onPlayCallback, Ease _easeType);
+        protected abstract void Scale(float _duration, Action _onPlayCallback, Ease _easeType);
+        protected abstract void ScaleX(float _duration, Action _onPlayCallback, Ease _easeType);
+        protected abstract void ScaleY(float _duration, Action _onPlayCallback, Ease _easeType);
+        internal abstract void Slide(float duration, Action onPlayCallback, Ease easeType, slideDirection direction);
     }
 }

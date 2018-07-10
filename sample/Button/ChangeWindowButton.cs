@@ -6,7 +6,6 @@ namespace OpenUi
     public class ChangeWindowButton : ODButton
     {
         [SerializeField] private SampleWindowType windowType;
-        private UiManager<SampleWindowType, SampleModalType> uiManager;
         override protected void Pressed()
         {
             base.Pressed();
