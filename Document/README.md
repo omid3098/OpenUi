@@ -26,6 +26,3 @@ Show/Hide Modal:
     - or call:
         UiManager.instance.ShowModal(ModalType modalType);
         UiManager.instance.HideModal(ModalType modalType);
-
-#Requirements:
-    - prime31 ZestKit tween library. (https://github.com/prime31/ZestKit)
