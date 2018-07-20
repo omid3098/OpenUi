@@ -1,10 +1,10 @@
 namespace OpenUi
 {
-    public class UiManagerSetting
+    public abstract class UiManagerSetting
     {
-        public static string canvasPath = "ui-canvas";
-        public static string windowPath = "window";
-        public static string modalPath = "modal";
-        public static string buttonPath = "button";
+        public abstract string canvasPath { get; }// = "ui-canvas";
+        public abstract string windowPath { get; }// = "window";
+        public abstract string modalPath { get; }// = "modal";
+        public abstract string buttonPath { get; }// = "button";
     }
 }

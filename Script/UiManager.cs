@@ -33,7 +33,7 @@ namespace OpenUi
             {
                 if (_canvas == null)
                 {
-                    var t = Resources.Load<Canvas>(UiManagerSetting.canvasPath);
+                    var t = Resources.Load<Canvas>(_setting.canvasPath);
                     _canvas = GameObject.Instantiate(t);
                     // _canvas.transform.SetParent(transform, false);
                 }
@@ -48,11 +48,12 @@ namespace OpenUi
         private List<Window<TWin, TMod>> windowPrefabs;
         private List<Window<TWin, TMod>> windowList;
         private List<Modal<TMod>> modalPrefabs;
-        private List<FormButton> formButtonPrefabs;
         private Window<TWin, TMod> currentWindow;
+        private UiManagerSetting _setting;
 
-        public UiManager()
+        public UiManager(UiManagerSetting setting)
         {
+            _setting = setting;
             LoadService();
         }
 
@@ -65,15 +66,19 @@ namespace OpenUi
             windowPrefabs = new List<Window<TWin, TMod>>();
             windowList = new List<Window<TWin, TMod>>();
             modalPrefabs = new List<Modal<TMod>>();
-            formButtonPrefabs = new List<FormButton>();
-            windowPrefabs.AddRange(Resources.LoadAll<Window<TWin, TMod>>(UiManagerSetting.windowPath));
-            modalPrefabs.AddRange(Resources.LoadAll<Modal<TMod>>(UiManagerSetting.modalPath));
-            formButtonPrefabs.AddRange(Resources.LoadAll<FormButton>(UiManagerSetting.buttonPath));
+            windowPrefabs.AddRange(Resources.LoadAll<Window<TWin, TMod>>(_setting.windowPath));
+            modalPrefabs.AddRange(Resources.LoadAll<Modal<TMod>>(_setting.modalPath));
         }
 
-        public void ChangeWindow(TWin windowType)
+        public Window<TWin, TMod> ChangeWindow(TWin windowType, Action OnComplete = null)
         {
-            if (currentWindow != null) currentWindow.Hide();
+            if (currentWindow != null && EqualityComparer<TWin>.Default.Equals(currentWindow.windowType, windowType))
+            {
+                if (OnComplete != null) OnComplete.Invoke();
+                // Debug.LogError("Returning because of same current windowType");
+                return currentWindow;
+            }
+            if (currentWindow != null) currentWindow.Hide(null);
             Window<TWin, TMod> window;
             window = windowList.Find(x => EqualityComparer<TWin>.Default.Equals(x.windowType, windowType));
 
@@ -90,15 +95,21 @@ namespace OpenUi
                 }
                 else
                 {
-                    Debug.LogError("Could not find window with " + windowType + " type in Resources/" + UiManagerSetting.windowPath + " path.");
-                    return;
+                    Debug.LogError("Could not find window with " + windowType + " type in Resources/" + _setting.windowPath + " path.");
+                    return null;
                 }
             }
             currentWindow = window;
-            window.Show();
+            window.Show(OnComplete);
+            return currentWindow;
         }
 
-        public void ShowModal(TMod modalType)
+        public Modal<TMod> ShowModal(TMod modalType)
+        {
+            return ShowModal(modalType, null);
+        }
+
+        public Modal<TMod> ShowModal(TMod modalType, Action OnComplete)
         {
             Modal<TMod> modal;
             modal = currentWindow.GetModal(modalType);
@@ -114,30 +125,37 @@ namespace OpenUi
                 }
                 else
                 {
-                    Debug.LogError("Could not find modal with " + modalType + " type in Resources/" + UiManagerSetting.modalPath + " path.");
-                    return;
+                    Debug.LogError("Could not find modal with " + modalType + " type in Resources/" + _setting.modalPath + " path.");
+                    return null;
+                }
+            }
+            else
+            {
+                // if modal is already active, return without showing again.
+                // because we only can have one active modal with each type.
+                if (modal.gameObject.activeInHierarchy)
+                {
+                    if (OnComplete != null) OnComplete.Invoke();
+                    return modal;
                 }
             }
             currentWindow.AddModal(modal);
-            modal.Show();
+            modal.Show(OnComplete);
+            return modal;
         }
 
-        public void HideModal(TMod modalType)
+        public Modal<TMod> HideModal(TMod modalType)
         {
             Modal<TMod> modal;
             modal = currentWindow.GetModal(modalType);
             if (modal != null)
             {
                 modal.Hide();
-                currentWindow.RemoveModal(modal);
+                // currentWindow.RemoveModal(modal);
             }
+            return modal;
         }
 
-        internal FormButton GetButtonPrefab(FormButtonTypes formButtonType)
-        {
-            FormButton btnPrefab = formButtonPrefabs.Find(x => x.formButtonType == formButtonType);
-            return btnPrefab;
-        }
         #endregion
     }
 }
