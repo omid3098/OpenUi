@@ -66,8 +66,8 @@ namespace OpenUi
             windowPrefabs = new List<Window<TWin, TMod>>();
             windowList = new List<Window<TWin, TMod>>();
             modalPrefabs = new List<Modal<TMod>>();
-            windowPrefabs.AddRange(Resources.LoadAll<Window<TWin, TMod>>(_setting.windowPath));
-            modalPrefabs.AddRange(Resources.LoadAll<Modal<TMod>>(_setting.modalPath));
+            // windowPrefabs.AddRange(Resources.LoadAll<Window<TWin, TMod>>(_setting.windowPath));
+            // modalPrefabs.AddRange(Resources.LoadAll<Modal<TMod>>(_setting.modalPath));
         }
 
         public Window<TWin, TMod> ChangeWindow(TWin windowType, Action OnComplete = null)
@@ -86,8 +86,11 @@ namespace OpenUi
             if (window == null)
             {
                 Window<TWin, TMod> windowPrefab = windowPrefabs.Find(x => EqualityComparer<TWin>.Default.Equals(x.windowType, windowType));
+                if (windowPrefab == null) windowPrefab = Resources.Load<Window<TWin, TMod>>(_setting.windowPath + "/" + windowType.ToString());
                 if (windowPrefab != null)
                 {
+                    if (windowPrefab.windowType.ToString() != windowType.ToString()) Debug.LogWarning(_setting.windowPath + "/" + windowType.ToString() + "--> This resource pretends to be a " + windowType + " window, but its component type missmatches");
+                    windowPrefabs.Add(windowPrefab);
                     window = GameObject.Instantiate(windowPrefab);
                     window.transform.SetParent(canvas.transform, false);
                     // window.transform.SetAsLastSibling();
@@ -95,7 +98,7 @@ namespace OpenUi
                 }
                 else
                 {
-                    Debug.LogError("Could not find window with " + windowType + " type in Resources/" + _setting.windowPath + " path.");
+                    Debug.LogError("Could not find window with " + windowType + " name in Resources/" + _setting.windowPath + " path.");
                     return null;
                 }
             }
@@ -117,15 +120,18 @@ namespace OpenUi
             if (modal == null)
             {
                 Modal<TMod> modalPrefab = modalPrefabs.Find(x => EqualityComparer<TMod>.Default.Equals(x.modalType, modalType));
+                if (modalPrefab == null) modalPrefab = Resources.Load<Modal<TMod>>(_setting.modalPath + "/" + modalType.ToString());
                 if (modalPrefab != null)
                 {
+                    if (modalPrefab.modalType.ToString() != modalType.ToString()) Debug.LogWarning(_setting.modalPath + "/" + modalType.ToString() + "--> This resource pretends to be a " + modalType + " modal, but its component type missmatches");
+                    modalPrefabs.Add(modalPrefab);
                     modal = GameObject.Instantiate(modalPrefab);
                     modal.transform.SetParent(currentWindow.transform, false);
                     // modal.transform.SetAsLastSibling();
                 }
                 else
                 {
-                    Debug.LogError("Could not find modal with " + modalType + " type in Resources/" + _setting.modalPath + " path.");
+                    Debug.LogError("Could not find modal with " + modalType + " name in Resources/" + _setting.modalPath + " path.");
                     return null;
                 }
             }
